@@ -1,0 +1,43 @@
+<launch>
+    
+    <!--- Sim Time -->
+    <param name="/use_sim_time" value="false" />
+
+    <!--- Run Rviz-->
+    <node pkg="rviz" type="rviz" name="rviz_GLIO" args="-d $(find GLIO)/config/test.rviz" />
+
+    <!-- Parameters -->
+    <rosparam file = "$(find GLIO)/config/config_urban_hk.yaml"/>
+    
+    <node pkg="tf" type="static_transform_publisher" name="GLIO" args="0 0 0 0 0 0 base_link GLIO 50"/>
+
+    <!--- GLIO -->
+    <node pkg="GLIO" type="Preprocessing" name="Preprocessing" output="screen"/>
+    <node pkg="GLIO" type="LidarOdometry" name="LidarOdometry" output="screen"/>
+    <node pkg="GLIO" type="Estimator" name="Estimator" output="screen" >
+    <param name="result_path" type="string" value="$(find GLIO)/../result/"/>
+    </node>
+
+    <!--- GNSS data processor -->
+    <!-- GNSS positioning mode, 0: single, 1:DGPS/DGNSS, 2: kinematic -->
+    <param name="mode"       type="int" value="1" />
+    <!-- number of frequency (1:L1,2:L1+L2,3:L1+L2+L5) -->
+    <param name="nf"      type="int" value="1" />
+    <param name="soltype"  type="int" value="0" />
+    <param name="ts_time"  type="int" value="0" />
+    <param name="te_time"  type="int" value="2000000000" />
+
+    <!-- path of dataset -->
+    <param name="roverMeasureFile" type="string" value="$(find global_fusion)/dataset/urbannavWhampoa/20210521.medium-urban.whampoa.ublox.f9p.obs" />
+    <param name="baseMeasureFile" type="string" value="$(find global_fusion)/dataset/urbannavWhampoa/hksc1410.21o" />
+    <param name="EmpFile" type="string" value="$(find global_fusion)/dataset/urbannavWhampoa/hksc141g.nav" />
+    <param name="out_folder"      type="string" value="$(find global_fusion)/dataset/urbannavWhampoa/rtklibResult.pos" />
+
+<!--     <param name="roverMeasureFile" type="string" value="$(find global_fusion)/dataset/tst20210517/20210517.light-urban.tste.ublox.f9p.obs" /> -->
+<!--     <param name="baseMeasureFile" type="string" value="$(find global_fusion)/dataset/tst20210517/hksc137c.21o" /> -->
+<!--     <param name="EmpFile" type="string" value="$(find global_fusion)/dataset/tst20210517/hksc137c.nav" /> -->
+<!--     <param name="out_folder"      type="string" value="$(find global_fusion)/dataset/tst20210517/rtklibResult.pos" /> -->
+
+    <node name="gnss_preprocessor_node" pkg="global_fusion" type="gnss_preprocessor_node" output="screen" />
+
+</launch>

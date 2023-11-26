@@ -1,0 +1,104 @@
+common:
+  frame_id: "GLIO"
+  data_set: "HK"
+
+IMU:
+  imu_topic: "/imu/data"
+  acc_n: 3.9939570888238808e-03
+  gyr_n: 1.5636343949698187e-03
+  acc_w: 6.4356659353532566e-05
+  gyr_w: 3.5640318696367613e-05
+  gravity: 9.80511
+
+lidar_odometry:
+  lidar_topic: "/velodyne_points"
+  ds_rate: 1
+  line_num: 32
+  edgeThreshold: 1.0 ## threshold for edge feature extraction (2.0 original)
+  surfThreshold: 0.1 ## threshold for surface feature extraction
+  max_num_iter: 12
+  scan_match_cnt: 1
+  if_to_deskew: false
+
+visualization: # parameters related to activation and visualization
+  GTinLocal: true # visualize GT in ENU frame
+  RTKinLocal: true # visualize GNSS-RTK (RTKLIB) in ENU frame
+  LCinLocal: true # visualize loosely-coupled GNSS/LIO fusion in ENU frame
+
+initialization: # for UrbanNav-HK-Deep-Urban-1 data
+  anc_ecef_x: -2419233.42
+  anc_ecef_y: 5385473.13
+  anc_ecef_z: 2405341.30
+  yaw_enu_local: 0
+  Euler_r: 0.6825
+  Euler_p: 0.098
+  Euler_y: 60.8
+  lever_arm_x: 0
+  lever_arm_y: 0
+  lever_arm_z: 0
+  timeshift: 18
+  station_x_: -2414266.9200
+  station_y_: 5386768.9870
+  station_z_: 2407460.0310
+
+#initialization: # for UrbanNav-HK-Medium-Urban-1 data
+#  anc_ecef_x: -2418181.50
+#  anc_ecef_y: 5385962.29
+#  anc_ecef_z: 2405305.18
+#  yaw_enu_local: 0
+#  Euler_r: 0.440
+#  Euler_p: -1.738
+#  Euler_y: 133.9
+#  lever_arm_x: 0
+#  lever_arm_y: 0
+#  lever_arm_z: 0
+#  timeshift: 18
+#  station_x_: -2414266.9200
+#  station_y_: 5386768.9870
+#  station_z_: 2407460.0310
+
+Estimator:
+  # parameters for tightly-coupled sliding window and batch optimization
+  enable_batch_fusion: true
+  sms_fusion_level: 0 # scan-to-multiscan constraints: 0 for relative pose constraints, 1 for LiDAR surf feature constraints.
+  search_range: 6
+  max_num_iter: 100
+  slide_window_width: 5
+  local_map_width: 50
+  edgeDSRange: 0.4
+  surfDSRange: 0.9
+  lidar_const: 7.5
+  surf_dist_thres: 0.18
+  kd_max_radius: 1.5
+
+  # parameters for loosely-coupled GNSS/LIO fusion
+  gnssCovThreshold: 5
+  poseCovThreshold: 10
+
+  # parameters for loop closure
+  loop_closure_on: false
+  lc_search_radius: 25
+  lc_map_width: 25
+  lc_icp_thres: 0.2
+  lc_time_thres: 30.0
+
+  # parameters for saving map
+  save_pcd: false
+  mapping_interval: 3
+
+  #extrinsic parameters: imu to lidar(UrbanNav)
+  ql2b_w: 1
+  ql2b_x: 0
+  ql2b_y: 0
+  ql2b_z: 0
+
+  tl2b_x: 0
+  tl2b_y: 0
+  tl2b_z: 0.28
+
+feature_selection:
+  feature_res_num: 100
+  rand_set_num: 300
+  batch_feature_res_num: 25
+  batch_rand_set_num: 400
+  random_select: true

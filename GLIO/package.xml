@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>GLIO</name>
+  <version>0.0.0</version>
+  <description>Tightly-coupled GNSS/LiDAR/IMU integration</description>
+
+  <maintainer email="xi-kun.liu@connect.polyu.hk">Xikun Liu</maintainer>
+  <license>TO DO</license>
+
+  <author email="xi-kun.liu@connect.polyu.hk">Xikun Liu</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>message_generation</depend>
+  <depend>message_runtime</depend>
+  <depend>nlosExclusion</depend>
+  <depend>gnss_comm</depend>
+
+</package>
