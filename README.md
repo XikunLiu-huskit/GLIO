@@ -4,6 +4,8 @@
     <img src="./support_files/demo2cropcompressed.gif" alt="drawing" width="800"/>
 </p>
 
+**GLIO: Tightly-Coupled GNSS/LiDAR/IMU Integration for Continuous and Drift-free State Estimation of Intelligent Vehicles in Urban Areas.** [paper link](./support_files/GLIO_paper.pdf)
+
 **GLIO** is an accurate and robust online GNSS/LiDAR/IMU odometry system that tightly fuses the raw measurements from GNSS (pseudorange and Doppler), LiDAR, and IMU through non-linear factor graph optimization (FGO), which enables globally continuous and drift-free pose estimation even in highly challenging environments like urban canyons. 
 
 The package is based on C++ which is compatible with the robot operation system (ROS) platform. Meanwhile, this package combines the RTKLIB (**[version: 2.4.3 b33](http://www.rtklib.com/)**) to read/decode the GNSS [RINEX](https://en.wikipedia.org/wiki/RINEX) files. Users from the Robotics field can easily have access to GNSS raw data for further study.
@@ -70,12 +72,11 @@ Clone the repository and catkin_make:
 ```bash
 mkdir GLIO_ws/src
 cd ~/GLIO_ws/src
-mkdir result
-git clone https://github.com/XikunLiu-huskit/3DLA-GLIO.git
+git clone https://github.com/XikunLiu-huskit/GLIO.git
 cd ../
 # if you fail in the last catkin_make, please source and catkin_make again
 catkin_make
-source ~/GLIO/devel/setup.bash
+source devel/setup.bash
 ```
 ## 3. **Run GLIO with dataset *UrbanNav***
 Launch GLIO via:
@@ -98,7 +99,7 @@ Thank you for citing our paper [GLIO: Tightly-Coupled GNSS/LiDAR/IMU Integration
   journal={IEEE Transactions on Intelligent Vehicles},
   year={2023},
   publisher={IEEE}
-}z
+}
 ```
 
 ## 5. **Acknowledgements**
