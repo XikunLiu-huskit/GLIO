@@ -10,7 +10,9 @@
 
 The package is based on C++ which is compatible with the robot operation system (ROS) platform. Meanwhile, this package combines the RTKLIB (**[version: 2.4.3 b33](http://www.rtklib.com/)**) to read/decode the GNSS [RINEX](https://en.wikipedia.org/wiki/RINEX) files. Users from the Robotics field can easily have access to GNSS raw data for further study.
 
-**Authors**: [Xikun Liu](https://www.polyu.edu.hk/aae/ipn-lab/us/index.html), [Weisong Wen](https://weisongwen.github.io/), [Li-ta Hsu](https://www.polyu.edu.hk/aae/ipn-lab/us/index.html) from the [Intelligent Positioning and Navigation Laboratory](https://www.polyu.edu.hk/aae/ipn-lab/us/index.html), The Hong Kong Polytechnic University. 
+**Authors**: [Xikun Liu](https://www.polyu.edu.hk/aae/ipn-lab/us/index.html), [Weisong Wen](https://weisongwen.github.io/), [Li-ta Hsu](https://www.polyu.edu.hk/aae/ipn-lab/us/index.html) from the [Intelligent Positioning and Navigation Laboratory](https://www.polyu.edu.hk/aae/ipn-lab/us/index.html), The Hong Kong Polytechnic University.
+
+**Contact**: Technical issue: [xi-kun.liu@connect.polyu.hk](xi-kun.liu@connect.polyu.hk), commercial issue: [welson.wen@polyu.edu.hk](welson.wen@polyu.edu.hk).
 
 ## System pipeline
 
@@ -50,24 +52,40 @@ To enable and visualize different fusion results, following parameters need to b
 - ```Estimator/enable_batch_fusion```: Set true for activation and visualization of tightly-coupled batch-based GNSS/LiDAR/IMU integration in ENU frame.
 - ```Estimator/sms_fusion_level```: Types of scan-to-multiscan constraints in batch-based integration. Set 0 for relative pose constraints, 1 for LiDAR surf feature constraints.
 
-## 1. Prerequisites
-### 1.1 **Ubuntu** and **ROS**
+## GLIO with Docker
+Build image
+```bash
+mkdir GLIO_ws/src
+cd ~/GLIO_ws/src
+git clone https://github.com/XikunLiu-huskit/GLIO.git
+cd ./GLIO/docker
+sudo make build #sudo if you get permission denied
+```
+
+It may take a while to build the image as we also build ceres. Once it finishes, start a container with:
+```bash
+sudo ./start_GLIO.sh #sudo if you get permission denied
+```
+It will also creat a dataset folder under /docker, which we can use as a shared folder between host and container. Download dataset in /dataset folder, then we can play GLIO with the data.
+
+## Prerequisites
+### 1 **Ubuntu** and **ROS**
 Ubuntu 64-bit 18.04, ROS Melodic. [ROS Installation](http://wiki.ros.org/ROS/Installation). The package is tested on Ubuntu 18.04 with ROS Melodic. 
 
-### 1.2. **Ceres Solver** and **GTSAM**
+### 2. **Ceres Solver** and **GTSAM**
 [Ceres Solver](https://ceres-solver.googlesource.com/ceres-solver) and [GTSAM](https://gtsam.org/) are used for optimization and fusion, for the installation of Ceres-solver, please refer to the instructions on [GraphGNSSLib](https://github.com/weisongwen/GraphGNSSLib). 
 
-### 1.3. **Eigen**
+### 3. **Eigen**
 [Eigen 3.3.3](https://gitlab.com/libeigen/eigen/-/archive/3.3.3/eigen-3.3.3.zip) is used for matrix calculation.
 
-### 1.4. **Extra Libraries**
+### 4. **Extra Libraries**
 ```bash
 sudo apt-get install ros-melodic-novatel-msgs
 ```
-### 1.5. **Pre-built Libraries**
+### 5. **Pre-built Libraries**
 [GraphGNSSLib V1.1](https://github.com/weisongwen/GraphGNSSLib.git) and [gnss_comm](https://github.com/HKUST-Aerial-Robotics/gnss_comm.git) is pre-built in the package.
 
-## 2. **Build GLIO**
+## **Build GLIO**
 Clone the repository and catkin_make:
 ```bash
 mkdir GLIO_ws/src
@@ -78,7 +96,7 @@ cd ../
 catkin_make
 source devel/setup.bash
 ```
-## 3. **Run GLIO with dataset *UrbanNav***
+## **Run GLIO with dataset *UrbanNav***
 Launch GLIO via:
 ```
 roslaunch GLIO run_urban_hk.launch
@@ -89,7 +107,7 @@ rosbag play UrbanNav-HK_Whampoa-20210521_sensors.bag
 ```
 Visit [UrbanNav](https://www.polyu-ipn-lab.com/download) and download more data sequences follow the [instruction](https://github.com/IPNL-POLYU/UrbanNavDataset/blob/master/docs/GETTING_STARTED.md).
 
-## 4. **Paper**
+## **Paper**
 
 Thank you for citing our paper [GLIO: Tightly-Coupled GNSS/LiDAR/IMU Integration for Continuous and Drift-free State Estimation of Intelligent Vehicles in Urban Areas (IEEE T-IV)](https://ieeexplore.ieee.org/abstract/document/10285475) if you find this code useful.
 ```
@@ -102,5 +120,5 @@ Thank you for citing our paper [GLIO: Tightly-Coupled GNSS/LiDAR/IMU Integration
 }
 ```
 
-## 5. **Acknowledgements**
+## **Acknowledgements**
 GLIO is based on [LiLi-OM](https://github.com/KIT-ISAS/lili-om.git), [GraphGNSSLib](https://github.com/weisongwen/GraphGNSSLib.git), and [GVINS](https://github.com/HKUST-Aerial-Robotics/GVINS.git). The [rviz_satellite](https://github.com/nobleo/rviz_satellite) is used for visualization. Huge Thanks to their great work.
