@@ -5389,7 +5389,7 @@ int main(int argc, char** argv) {
 
     ros::init(argc, argv, "GLIO");
 
-    ROS_INFO("\033[1;32m---->\033[0m 3D LiDAR Aided GNSS-RTK fusion Started.");
+    ROS_INFO("\033[1;32m---->\033[0m GLIO Started.");
 
     /* define the estimator */
     Estimator Estimator_;
